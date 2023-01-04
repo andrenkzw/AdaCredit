@@ -1,0 +1,4 @@
+Document,AccountIdentifier,FullName,AccountBalance,Telephone,BirthDate,Active
+12345678901,980133,Joao Vitor da     Silva,0.00,+5521912345678,01/31/2000 00:00:00,True
+12121212121,242022,Mariana,0,+5511912121212,01/01/1999 00:00:00,False
+12312312312,566788,Testezinho de Souza Jr,0.00,+5511911112233,01/01/2010 00:00:00,True
