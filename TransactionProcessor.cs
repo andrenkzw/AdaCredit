@@ -87,16 +87,17 @@ public static class TransactionProcessor
         (success, Client? destinationClient) = ValidateDestinationAccount(repository, transaction);
         if (!success) { return false; }
         if (!ValidateType(transaction, originClient, destinationClient)) { return false; }
-        if (!ValidateFlow(transaction)) { return false; }
+        //if (!ValidateFlow(transaction)) { return false; }
         (success, decimal destinationValue) = ValidateValue(transaction);
         if (!success) { return false; }
         decimal originValue = ApplyFare(destinationValue, transaction.Type, transaction.Flow, date);        
-        success = transaction.Flow switch
-        {
-            "0" => ProcessTransfer(repository, originClient, originValue, destinationClient, destinationValue),
-            "1" => ProcessTransfer(repository, destinationClient, destinationValue, originClient, originValue),
-            _ => true
-        };
+        // success = transaction.Flow switch
+        // {
+        //     "0" => ProcessTransfer(repository, originClient, originValue, destinationClient, destinationValue),
+        //     "1" => ProcessTransfer(repository, destinationClient, destinationValue, originClient, originValue),
+        //     _ => true
+        // };
+        success = ProcessTransfer(repository, originClient, originValue, destinationClient, destinationValue);
         if (!success)
         {
             transaction.Error = "Saldo Insuficiente";
@@ -246,7 +247,8 @@ public static class TransactionProcessor
 
     private static decimal ApplyFare(decimal value, string type, string flow, DateTime date)
     {
-        if (flow == "1" || date < new DateTime(2022, 12, 1)) { return value; }
+        //if (flow == "1" || date < new DateTime(2022, 12, 1)) { return value; }
+        if (date < new DateTime(2022, 12, 1)) { return value; }
         switch (type)
         {
             case "TED":
